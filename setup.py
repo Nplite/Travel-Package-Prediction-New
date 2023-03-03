@@ -15,9 +15,9 @@ def get_requirements()->List[str]:
 
 
 
-setup(name='Travel Package Prediction',
+setup(name='Travel Package prediction',
       version='0.0.1',
-      description='Tourism Industry level project',
+      description='Tourism Industry lavel project',
       author='Namdeo Patil',
       author_email='namdeopatil.1995@gmail.com',
       packages=find_packages(),
