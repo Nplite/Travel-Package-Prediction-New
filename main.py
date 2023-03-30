@@ -9,7 +9,8 @@ from Travel_Package_prediction.entity import config_entity
 from Travel_Package_prediction.components.data_ingestion import DataIngestion
 from Travel_Package_prediction.components.data_validation import DataValidation
 from Travel_Package_prediction.components.data_transformation import DataTransformation
-
+from Travel_Package_prediction.components import ModelEvaluation
+from Travel_Package_prediction.components.model_pusher import ModelPusher
 
 
 
@@ -47,5 +48,24 @@ if __name__=="__main__":
         model_trainer = ModelTrainer(model_trainer_config= model_trainer_config, data_transformation_artifact=data_transformation_artifact)
         model_trainer_artifact = model_trainer.initiate_model_trainer()
 
+      # Model Evaluation
+        model_evaluation_config = config_entity.ModelEvaluationConfig(training_pipeline_config=training_pipeline_config)
+        model_evaluation = ModelEvaluation(model_evaluation_config = model_evaluation_config,
+        data_ingestion_artifact = data_ingestion_artifact,
+        data_transformation_artifact = data_transformation_artifact,
+        model_trainer_artifact = model_trainer_config)
+        model_evaluation_artifact = model_evaluation.initiate_model_evaluation()
+
+      # Model pusher
+        model_pusher_config = config_entity.ModelPusherConfig(training_pipeline_config=training_pipeline_config)
+        model_pusher = ModelPusher(model_pusher_config= model_pusher_config,
+                                   data_transformation_artifact=data_transformation_artifact,
+                                   model_trainer_artifact=model_trainer_artifact)
+        
+        Model_pusher_artifact = model_pusher.initiate_model_pusher()
+    
+
+
     except Exception as e:
         print(e)
+        
